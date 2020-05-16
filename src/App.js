@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {userRef} from './firebase'
 
 function App() {
+
+  useEffect(() => {
+
+    function callFunc() {
+      userRef.push({
+        email: 'io@io.com',
+        password: '1234'
+      });
+    }
+    callFunc();
+
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
