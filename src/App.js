@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Route, Link, Redirect } from "react-router-dom";
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import { firebaseApp } from "./firebase";
-import { StoreProvider } from './components/store';
+import { StoreProvider } from "./components/store";
 import Login from "./components/pages/Login";
 import Home from "./components/pages/Home";
 import Register from "./components/pages/Register";
 import RecoveryPassword from "./components/pages/RecoveryPassword";
-import NavBar from './components/NavBar'
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 function App(props) {
-
   const [isLoggedIn, setIsLoggedIn] = useState();
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   firebaseApp.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -26,22 +24,47 @@ function App(props) {
     }
   });
 
-
-
   return (
     <StoreProvider>
       <div className="App">
-        <Route path="/login" render={() => !isLoggedIn ? <Login /> : <Redirect to="/" />} />
-        <Route path="/register" render={() => !isLoggedIn ? <Register /> : <Redirect to="/" />} />
-        <Route path="/recovery-psw" render={() => !isLoggedIn ? <RecoveryPassword /> : <Redirect to="/" />} />
-        <NavBar />
-        <Route exact path="/" render={() => isLoggedIn ? <Home  isLoggedIn={isLoggedIn} /> : <Redirect to="/login" /> } />       
+        <Route
+          exact
+          path="/"
+          render={() => (!isLoggedIn ? <Login /> : <Redirect to="/index" />)}
+        />
+        <Route
+          exact
+          path="/register"
+          render={() => (!isLoggedIn ? <Register /> : <Redirect to="/index" />)}
+        />
+        <Route
+          exact
+          path="/recovery-psw"
+          render={() =>
+            !isLoggedIn ? <RecoveryPassword /> : <Redirect to="/index" />
+          }
+        />
+        {isLoggedIn ? (
+          <>
+            <NavBar />
+            <Footer />
+            </>
+        ) : null}
+            <Route exact path="/index" render={() =>
+                isLoggedIn ? (
+                  <Home isLoggedIn={isLoggedIn} />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+          
       </div>
     </StoreProvider>
   );
 }
 
-export default App;
+export default withRouter(App);
 
 /* 
 

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
 import { WithStoreConsumer } from "../store";
+import { firebaseApp } from '../../firebase';
 
 const NavBar = (props) => {
 
@@ -11,6 +12,17 @@ const NavBar = (props) => {
     useEffect(() => {
         setShowMenu(props.context.showMenu);
         }, []);
+
+    const onLogout = () => {
+      firebaseApp.auth().signOut()
+        .then(() => {
+            console.log('user logged out');
+            props.history.push('/');
+        })
+        .catch(err => {
+            console.log('err', err);
+        })
+    }
 
     const onShowMenu = () => {
         props.context.setShowMenu(!showMenu);
@@ -23,36 +35,38 @@ const NavBar = (props) => {
     }
   return (
     <>
-      <div className="row navbar">
-        <div className="col-md-6"  onClick={onShowMenu}>
-          <FontAwesomeIcon icon={faBars} className="bar" color="white"/>
+      <div className="navbar">
+        <div className="nav-div" onClick={onShowMenu}>
+          <FontAwesomeIcon icon={faBars} className="bar" color="#E0E0EA"/>
         </div>
-        <div className="col-md-6"></div>
+        <div  className="nav-div">
+        <button onClick={onLogout}>logout</button>
+        </div>
       </div>
-      {showMenu && <div className="row">
-        <ul class="main-nav">
-          <li class="nav-links-li" onClick={onHome}>
-            <a href="#" class="nav-links">
+      {showMenu && <div>
+        <ul className="main-nav">
+          <li className="nav-links-li" onClick={onHome}>
+            <a href="#" className="nav-links">
               Home
             </a>
           </li>
-          <li  class="nav-links-li">
-            <a href="#" class="nav-links">
+          <li  className="nav-links-li">
+            <a href="#" className="nav-links">
               Products
             </a>
           </li>
-          <li  class="nav-links-li">
-            <a href="#" class="nav-links">
+          <li  className="nav-links-li">
+            <a href="#" className="nav-links">
               About Us
             </a>
           </li>
-          <li  class="nav-links-li">
-            <a href="#" class="nav-links">
+          <li  className="nav-links-li">
+            <a href="#" className="nav-links">
               Contact Us
             </a>
           </li>
-          <li  class="nav-links-li">
-            <a href="#" class="nav-links">
+          <li  className="nav-links-li">
+            <a href="#" className="nav-links">
               Blog
             </a>
           </li>
@@ -62,4 +76,4 @@ const NavBar = (props) => {
   );
 };
 
-export default WithStoreConsumer(NavBar);
+export default withRouter(WithStoreConsumer(NavBar));

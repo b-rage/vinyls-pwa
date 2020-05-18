@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
 import { Link } from "react-router-dom";
+import CryptoAES from 'crypto-js/aes';
+
 
 const Register = (props) => {
   const [username, updateUsername] = useState("");
@@ -36,6 +38,12 @@ const Register = (props) => {
           return false;
         }
 
+        const cipherEmail = CryptoAES.encrypt(email, 'secret key 123');
+        const cipherPassword = CryptoAES.encrypt(password, 'secret key 123');
+
+        localStorage.setItem('email', cipherEmail);
+        localStorage.setItem('password', cipherPassword);
+
         userRef.child(data.user.uid).set({
           email: email,
           username: username,
@@ -53,16 +61,16 @@ const Register = (props) => {
     <>
       <div className="content">
         <div className="form-login">
-          <form onSubmit={handleSubmit} className="row">
-            <div className="col-md-12">
+          <form onSubmit={handleSubmit}>
+            <div>
               <input
                 className="input-login"
                 placeholder="Username"
-                type="username"
+                type="text"
                 onChange={handleUsernameChange}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <input
                 className="input-login"
                 placeholder="Email"
@@ -70,7 +78,7 @@ const Register = (props) => {
                 onChange={handleEmailChange}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <input
                 className="input-login"
                 placeholder="Password"
@@ -78,13 +86,13 @@ const Register = (props) => {
                 onChange={handlePasswordChange}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <button className="btn" type="submit">
                 Sign Up
               </button>
             </div>
-            <div className="col-md-12">
-              <Link to="/login" onClick={props.onCleanError}>
+            <div>
+              <Link to="/" onClick={props.onCleanError}>
                 <p className="p">Log In</p>
               </Link>
             </div>

@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
 import { Link } from "react-router-dom";
+import CryptoENC from 'crypto-js/enc-utf8';
+import CryptoAES from 'crypto-js/aes';
 
 const Login = (props) => {
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
+
+  useEffect(() => {
+    if(localStorage.getItem('email').length > 0) {
+      const _email = localStorage.getItem('email');
+      const _cipherEmail = CryptoAES.decrypt(_email.toString(), 'secret key 123');
+      updateEmail(_cipherEmail.toString(CryptoENC));
+      const _password = localStorage.getItem('password');
+      const _cipherPassword = CryptoAES.decrypt(_password.toString(), 'secret key 123');
+      updatePassword(_cipherPassword.toString(CryptoENC));
+    }
+  },[])
 
   const handleEmailChange = (e) => {
     //props.onCleanError()
@@ -40,24 +53,26 @@ const Login = (props) => {
     <>
       <div className="content">
         <div className="form-login">
-          <form onSubmit={handleSubmit} className="row">
-            <div className="col-md-12">
+          <form onSubmit={handleSubmit}>
+            <div>
               <input
                 className="input-login"
                 placeholder="Email"
                 type="email"
                 onChange={handleEmailChange}
+                value={email}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <input
                 className="input-login"
                 placeholder="Password"
                 type="password"
                 onChange={handlePasswordChange}
+                value={password}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <button className="btn" type="submit">
                 Log In to Vinyls
               </button>

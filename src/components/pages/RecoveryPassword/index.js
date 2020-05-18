@@ -41,10 +41,10 @@ const RecoveryPassword = (props) => {
   return (
     <>
       <div className="content">
-        <p>We will send a email to your account</p>
+        <p className="p">We will send a email to your account</p>
         <div className="form-login">
-          <form onSubmit={handleSubmit} className="row">
-            <div className="col-md-12">
+          <form onSubmit={handleSubmit}>
+            <div>
               <input
                 className="input-login"
                 placeholder="Email"
@@ -52,7 +52,7 @@ const RecoveryPassword = (props) => {
                 onChange={handleEmailChange}
               />
             </div>
-            <div className="col-md-12">
+            <div>
               <button className="btn" type="submit">
                 Recovery password
               </button>
