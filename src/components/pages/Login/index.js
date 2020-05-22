@@ -3,13 +3,14 @@ import { firebaseApp, userRef } from "../../../firebase";
 import { Link } from "react-router-dom";
 import CryptoENC from 'crypto-js/enc-utf8';
 import CryptoAES from 'crypto-js/aes';
+import image from '../../../assets/img/logo192.png';
 
 const Login = (props) => {
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
 
   useEffect(() => {
-    if(localStorage.getItem('email').length > 0) {
+    if(localStorage.getItem('email') && localStorage.getItem('email').length > 0) {
       const _email = localStorage.getItem('email');
       const _cipherEmail = CryptoAES.decrypt(_email.toString(), 'secret key 123');
       updateEmail(_cipherEmail.toString(CryptoENC));
@@ -52,6 +53,7 @@ const Login = (props) => {
   return (
     <>
       <div className="content">
+        <img src={image} alt="logo-vinyls" className="logo"/>
         <div className="form-login">
           <form onSubmit={handleSubmit}>
             <div>

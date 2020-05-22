@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import { firebaseApp } from "./firebase";
 import { StoreProvider } from "./components/store";
 import Login from "./components/pages/Login";
@@ -8,6 +8,9 @@ import Register from "./components/pages/Register";
 import RecoveryPassword from "./components/pages/RecoveryPassword";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import Contacts from "./components/pages/Contacts";
+import TopMenu from "./components/shared/TopMenu";
+import Profile from "./components/pages/Profile";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -47,12 +50,29 @@ function App(props) {
         {isLoggedIn ? (
           <>
             <NavBar />
+            <TopMenu/>
             <Footer />
             </>
         ) : null}
             <Route exact path="/index" render={() =>
                 isLoggedIn ? (
-                  <Home isLoggedIn={isLoggedIn} />
+                  <Home isLoggedIn={isLoggedIn}/>
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route exact path="/contacts" render={() =>
+                isLoggedIn ? (
+                  <Contacts isLoggedIn={isLoggedIn}/>
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route exact path="/profile" render={() =>
+                isLoggedIn ? (
+                  <Profile isLoggedIn={isLoggedIn}/>
                 ) : (
                   <Redirect to="/" />
                 )

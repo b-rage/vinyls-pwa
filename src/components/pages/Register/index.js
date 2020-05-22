@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
 import { Link } from "react-router-dom";
 import CryptoAES from 'crypto-js/aes';
+import image from '../../../assets/img/logo192.png';
 
 
 const Register = (props) => {
@@ -60,6 +61,7 @@ const Register = (props) => {
   return (
     <>
       <div className="content">
+        <img src={image} alt="logo-vinyls" className="logo"/>
         <div className="form-login">
           <form onSubmit={handleSubmit}>
             <div>

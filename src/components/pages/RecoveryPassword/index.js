@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
 import { withRouter } from 'react-router-dom';
+import image from '../../../assets/img/logo192.png';
 
 const RecoveryPassword = (props) => {
 
@@ -41,6 +42,7 @@ const RecoveryPassword = (props) => {
   return (
     <>
       <div className="content">
+        <img src={image} alt="logo-vinyls" className="logo"/>
         <p className="p">We will send a email to your account</p>
         <div className="form-login">
           <form onSubmit={handleSubmit}>

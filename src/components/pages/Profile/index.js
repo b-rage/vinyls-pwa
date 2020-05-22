@@ -2,21 +2,20 @@ import React, { useEffect } from "react";
 import { WithStoreConsumer } from "../../store";
 
 
-const Home = (props) => {
+const Profile = (props) => {
 
-  useEffect(() => {
-    props.context.setPageName('home')
-    console.log('HOME---------')
-
+    useEffect(() => {
+        props.context.setPageName('profile')
+        console.log('CONTACTS---------')
+    
     },[]);
-
 
   return (
     <div className="home">
       <div className="row">
 
       </div>
-      home
+      Profile
       
       home
       <br></br>
@@ -89,4 +88,4 @@ const Home = (props) => {
   );
 };
 
-export default WithStoreConsumer(Home);
+export default WithStoreConsumer(Profile);

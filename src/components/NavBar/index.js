@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
 import { WithStoreConsumer } from "../store";
 import { firebaseApp } from '../../firebase';
+import image from '../../assets/img/logo192.png';
 
 const NavBar = (props) => {
 
@@ -37,10 +39,12 @@ const NavBar = (props) => {
     <>
       <div className="navbar">
         <div className="nav-div" onClick={onShowMenu}>
-          <FontAwesomeIcon icon={faBars} className="bar" color="#E0E0EA"/>
+          {/* <FontAwesomeIcon icon={faBars} className="bar" color="#E0E0EA"/> */}
+          <img src={image} alt="logo-vinyls" className="logo-navbar"/>
         </div>
-        <div  className="nav-div">
-        <button onClick={onLogout}>logout</button>
+        <div  className="nav-div-right">
+       {/*  <button onClick={onLogout}>logout</button> */}
+        <FontAwesomeIcon icon={faEllipsisV} onClick={onShowMenu} className="ellipsis-menu-icon"/>
         </div>
       </div>
       {showMenu && <div>
@@ -66,8 +70,8 @@ const NavBar = (props) => {
             </a>
           </li>
           <li  className="nav-links-li">
-            <a href="#" className="nav-links">
-              Blog
+            <a onClick={onLogout} className="nav-links">
+              Logout
             </a>
           </li>
         </ul>

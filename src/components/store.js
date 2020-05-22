@@ -34,7 +34,10 @@ export class StoreProvider extends React.Component {
     setIsLoggedIn: value => this.setState({ isLoggedIn: value }),
 
     showMenu: false,
-    setShowMenu: value => this.setState({ showMenu: value })
+    setShowMenu: value => this.setState({ showMenu: value }),
+
+    pageName: '',
+    setPageName: value => this.setState({ pageName: value })
   }
 
 
