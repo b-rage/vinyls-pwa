@@ -15,17 +15,22 @@ import Profile from "./components/pages/Profile";
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log("user.uid", user);
+        sessionStorage.setItem('userId', user.uid);
+        setIsLoggedIn(true);
+      } else {
+        console.log("No User Logged In");
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
 
-  firebaseApp.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log("user.uid", user.uid);
-      setIsLoggedIn(true);
-    } else {
-      console.log("No User Logged In");
-      setIsLoggedIn(false);
-    }
-  });
+ 
+
+  
 
   return (
     <StoreProvider>
@@ -92,6 +97,6 @@ serve -s build
 
 yarn build
 
-surge --domain https://prova-pwa.surge.sh
+surge --domain https://troubled-memory.surge.sh/
 
  */

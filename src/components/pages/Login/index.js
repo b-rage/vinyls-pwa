@@ -8,6 +8,8 @@ import image from '../../../assets/img/logo192.png';
 const Login = (props) => {
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
+  const [errorMessage, updateErrorMessage] = useState("");
+  const [error, updateError] = useState(false);
 
   useEffect(() => {
     if(localStorage.getItem('email') && localStorage.getItem('email').length > 0) {
@@ -21,13 +23,13 @@ const Login = (props) => {
   },[])
 
   const handleEmailChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const email = e.target.value;
     updateEmail(email);
   };
 
   const handlePasswordChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const password = e.target.value;
     updatePassword(password);
   };
@@ -45,7 +47,8 @@ const Login = (props) => {
         });
       })
       .catch((err) => {
-        console.log("err", err);
+        updateErrorMessage(err.message);
+        updateError(true);
         return err;
       });
   };
@@ -54,6 +57,7 @@ const Login = (props) => {
     <>
       <div className="content">
         <img src={image} alt="logo-vinyls" className="logo"/>
+        {error && <p className="p-error">{errorMessage}</p>}
         <div className="form-login">
           <form onSubmit={handleSubmit}>
             <div>

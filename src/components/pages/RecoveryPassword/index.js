@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import image from '../../../assets/img/logo192.png';
 
 const RecoveryPassword = (props) => {
 
   const [email, updateEmail] = useState("");
+  const [errorMessage, updateErrorMessage] = useState("");
+  const [error, updateError] = useState(false);
 
   const handleEmailChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const email = e.target.value;
     updateEmail(email);
   };
@@ -16,33 +18,32 @@ const RecoveryPassword = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email.trim()) throw console.error("error");
+    if (!email.trim()) {
+      updateErrorMessage('email required');
+      throw updateError(true);
+    };
 
-    firebaseApp.auth().sendPasswordResetEmail(email);
+    firebaseApp.auth().sendPasswordResetEmail(email)
+    .then((data) => {
+      updateErrorMessage('check your email account');
+      updateError(true);
+      return true;
+    })
+    .catch((err) => {
+      updateErrorMessage(err.message);
+      updateError(true);
+      return err;
+    });;
 
-    props.history.push('/login');
+    //props.history.push('/');
 
-
-
-    /* fetch(`https://vinyls-5ec89.firebaseio.com/api/recovery-password`, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email
-        }),
-      })
-      .then(() => {
-        console.log("Document successfully written!");
-      })
-      .catch(error => {
-        console.error("Error writing document: ", error);
-      }); */
   };
 
   return (
     <>
       <div className="content">
         <img src={image} alt="logo-vinyls" className="logo"/>
+        {error && <p className="p-error">{errorMessage}</p>}
         <p className="p">We will send a email to your account</p>
         <div className="form-login">
           <form onSubmit={handleSubmit}>
@@ -58,6 +59,11 @@ const RecoveryPassword = (props) => {
               <button className="btn" type="submit">
                 Recovery password
               </button>
+            </div>
+            <div>
+              <Link to="/">
+                <p className="p">Log In</p>
+              </Link>
             </div>
           </form>
         </div>

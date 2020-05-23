@@ -11,7 +11,7 @@ const Contacts = (props) => {
     },[]);
 
   return (
-    <div className="home">
+    <div className="contacts">
       <div className="row">
 
       </div>

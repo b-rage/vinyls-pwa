@@ -12,8 +12,22 @@ const NavBar = (props) => {
     const [showMenu, setShowMenu] = useState(null);
 
     useEffect(() => {
-        setShowMenu(props.context.showMenu);
-        }, []);
+      const userId = sessionStorage.getItem('userId');
+      setShowMenu(props.context.showMenu);
+      getUserInfo(userId);       
+    }, []);
+
+    const getUserInfo = (userId) => {
+      try { 
+        firebaseApp.database().ref("users")
+          .child(userId).once('value', snapshot => {
+              props.context.setUserInfo(snapshot.val());
+            return snapshot.val();
+          });           
+      } catch (error) {
+          console.log('error', error);
+      } 
+    }
 
     const onLogout = () => {
       firebaseApp.auth().signOut()
@@ -39,12 +53,15 @@ const NavBar = (props) => {
     <>
       <div className="navbar">
         <div className="nav-div" onClick={onShowMenu}>
-          {/* <FontAwesomeIcon icon={faBars} className="bar" color="#E0E0EA"/> */}
           <img src={image} alt="logo-vinyls" className="logo-navbar"/>
         </div>
-        <div  className="nav-div-right">
-       {/*  <button onClick={onLogout}>logout</button> */}
-        <FontAwesomeIcon icon={faEllipsisV} onClick={onShowMenu} className="ellipsis-menu-icon"/>
+       <div className="nav-div-right">
+        <div className="nav-div-avatar">
+          <p className="p">{props.context.userInfo.username}</p>
+        </div>
+        <div className="nav-div-menu">
+          <FontAwesomeIcon icon={faEllipsisV} onClick={onShowMenu} className="ellipsis-menu-icon"/>
+        </div>
         </div>
       </div>
       {showMenu && <div>

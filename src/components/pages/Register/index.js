@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
 import { Link } from "react-router-dom";
 import CryptoAES from 'crypto-js/aes';
@@ -9,21 +9,23 @@ const Register = (props) => {
   const [username, updateUsername] = useState("");
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
+  const [errorMessage, updateErrorMessage] = useState("");
+  const [error, updateError] = useState(false);
 
   const handleUsernameChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const username = e.target.value;
     updateUsername(username);
   };
 
   const handleEmailChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const email = e.target.value;
     updateEmail(email);
   };
 
   const handlePasswordChange = (e) => {
-    //props.onCleanError()
+    updateError(false);
     const password = e.target.value;
     updatePassword(password);
   };
@@ -53,7 +55,8 @@ const Register = (props) => {
         return true;
       })
       .catch((err) => {
-        console.log("err", err);
+        updateErrorMessage(err.message);
+        updateError(true);
         return err;
       });
   };
@@ -62,6 +65,7 @@ const Register = (props) => {
     <>
       <div className="content">
         <img src={image} alt="logo-vinyls" className="logo"/>
+        {error && <p className="p-error">{errorMessage}</p>}
         <div className="form-login">
           <form onSubmit={handleSubmit}>
             <div>
@@ -94,7 +98,7 @@ const Register = (props) => {
               </button>
             </div>
             <div>
-              <Link to="/" onClick={props.onCleanError}>
+              <Link to="/">
                 <p className="p">Log In</p>
               </Link>
             </div>

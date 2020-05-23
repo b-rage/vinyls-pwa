@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { WithStoreConsumer } from "../../store";
 
 
+
 const Home = (props) => {
 
-  useEffect(() => {
-    props.context.setPageName('home')
-    console.log('HOME---------')
+  useEffect(() => {  
+    props.context.setPageName('home');
+  },[]);
 
-    },[]);
+    
 
 
   return (
