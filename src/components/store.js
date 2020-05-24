@@ -39,6 +39,9 @@ export class StoreProvider extends React.Component {
     pageName: '',
     setPageName: value => this.setState({ pageName: value }),
 
+    avatarImgUrl: '',
+    setAvatarImgUrl: value => this.setState({ avatarImgUrl: value }),
+
     userInfo: {},
     setUserInfo: value => this.setState({ userInfo: value })
   }

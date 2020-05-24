@@ -1,0 +1,64 @@
+/* .crop-container {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  margin-top: 82px;
+}
+
+.controls {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  margin-bottom: 50px;
+} */
+
+.crop-container {
+  position: absolute;
+  top: 170px;
+  left: 0;
+  right: 0;
+  height: 50%;
+}
+
+.controls {
+  position: absolute;
+  bottom: 7%;
+  width: 50%;
+  transform: translateX(20%);
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  padding: 22px 0px;
+}
+
+.input-class {
+  width: 90%;
+  height: 24px;
+  margin: 20px auto 0 0;
+  padding: 5px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.btn-image-upload {
+  background: #E0E0EA;
+  border-radius: 23px;
+  color: #14123A;
+  display: inline-block;
+  font-size: 13px;
+  padding: 15px 25px;
+  font-weight: bold;
+  margin: 20px auto;
+  border: none;
+  text-decoration: none !important;
+  position: absolute;
+  bottom: 7%;
+  left: 70%;
+}

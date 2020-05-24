@@ -9,11 +9,12 @@ import image from '../../assets/img/logo192.png';
 const NavBar = (props) => {
 
     const [showMenu, setShowMenu] = useState(null);
+    const avatarImgUrl = props.context.userInfo.avatarImgUrl;
 
     useEffect(() => {
       const userId = sessionStorage.getItem('userId');
       setShowMenu(props.context.showMenu);
-      getUserInfo(userId);       
+      getUserInfo(userId);     
     }, []);
 
     const getUserInfo = (userId) => {
@@ -21,6 +22,7 @@ const NavBar = (props) => {
         firebaseApp.database().ref("users")
           .child(userId).once('value', snapshot => {
               props.context.setUserInfo(snapshot.val());
+              console.log('userInfo', snapshot.val())  
             return snapshot.val();
           });           
       } catch (error) {
@@ -31,7 +33,7 @@ const NavBar = (props) => {
     const onLogout = () => {
       firebaseApp.auth().signOut()
         .then(() => {
-            console.log('user logged out');
+            sessionStorage.removeItem('userId');
             props.history.push('/');
         })
         .catch(err => {
@@ -56,7 +58,8 @@ const NavBar = (props) => {
         </div>
        <div className="nav-div-right">
         <div className="nav-div-avatar">
-          <p className="p">{props.context.userInfo.username}</p>
+         {/*  <p className="p">{props.context.userInfo.username}</p> */}
+          <img className='img-profile-small' src={avatarImgUrl ? avatarImgUrl : './img/icon-profile.png'} ></img>
         </div>
         <div className="nav-div-menu">
           <FontAwesomeIcon icon={faEllipsisV} onClick={onShowMenu} className="ellipsis-menu-icon"/>
