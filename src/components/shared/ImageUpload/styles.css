@@ -1,23 +1,6 @@
-/* .crop-container {
-  position: absolute;
-  top: 120px;
-  left: 0;
-  right: 0;
-  bottom: 80px;
-  margin-top: 82px;
-}
-
-.controls {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  width: 70%;
-  margin-bottom: 50px;
-} */
-
 .crop-container {
   position: absolute;
-  top: 170px;
+  top: 180px;
   left: 0;
   right: 0;
   height: 50%;
@@ -37,11 +20,20 @@
   padding: 22px 0px;
 }
 
-.input-class {
-  width: 90%;
+input[type="file" i] {
+  -webkit-appearance: initial;
+  background-color: #E0E0EA;
+  cursor: default;
+  align-items: baseline;
+  color: #14123A;
+  text-align: start !important;
+  padding: 9px 10px 4px 10px;
+}
+
+.input-class-upload-image {
+  width: 70%;
   height: 24px;
-  margin: 20px auto 0 0;
-  padding: 5px 10px;
+  padding: 9px 10px 4px 10px;
   border: 1px solid #d9d9d9;
   border-radius: 3px;
   font-size: 12px;
@@ -53,7 +45,7 @@
   color: #14123A;
   display: inline-block;
   font-size: 13px;
-  padding: 15px 25px;
+  padding: 11px 25px;
   font-weight: bold;
   margin: 20px auto;
   border: none;
@@ -62,3 +54,4 @@
   bottom: 7%;
   left: 70%;
 }
+

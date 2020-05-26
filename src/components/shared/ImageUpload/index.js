@@ -10,7 +10,7 @@ import './styles.css';
 
 
 
-const FileUpload = ({ doImageUrl, fileType }) => {
+const FileUpload = ({ doImageUrl, fileType, onShowImageUpload }) => {
 
     const [imageUrl, setImageUrl] = useState('');
     const [image, setImage] = useState('');
@@ -25,6 +25,10 @@ const FileUpload = ({ doImageUrl, fileType }) => {
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
     }, [])
+
+    const goBack = () => {
+      onShowImageUpload(false);
+    }
 
     const showCroppedImage = useCallback(async () => {
         
@@ -45,6 +49,7 @@ const FileUpload = ({ doImageUrl, fileType }) => {
                 }).then(downUrl => {
                     setImageUrl(downUrl);
                     doImageUrl(downUrl);
+                    onShowImageUpload(false);
                     console.log('downUrl', downUrl)
                 })
           
@@ -100,8 +105,9 @@ const FileUpload = ({ doImageUrl, fileType }) => {
 
 
     return (
-        <>
-            <input className="input-class" type="file" onChange={onUpload} /> 
+        <>  
+            <button className="btn-back" onClick={goBack}>&#8826;</button> 
+            <input className="input-class-upload-image" type="file" onChange={onUpload} /> 
             <div className="crop-container">
                 <Cropper
                 image={image}
@@ -126,9 +132,7 @@ const FileUpload = ({ doImageUrl, fileType }) => {
                 />   
                               
             </div>
-            <button className="btn-image-upload" onClick={showCroppedImage}>
-                Done
-            </button> 
+            <button className="btn-image-upload" onClick={showCroppedImage}>Done</button> 
         </>
     );
 }

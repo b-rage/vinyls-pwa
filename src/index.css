@@ -4,6 +4,12 @@
   justify-content: space-around;
 }
 
+.add-button {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
 
 .content {
   display: flex;
@@ -282,7 +288,52 @@ input[type="text"].input-login::-webkit-input-placeholder {
 .profile {
   margin-top: 106px;
   background-color: white;
-  min-height: 100vh;
+  min-height: 80vh;
   text-align: center;
+  padding-top: 20px;
+}
 
+.modal-image {
+  z-index: 1001;
+}
+
+.col-image-profile {
+  width: 50%; 
+}
+
+.col-btn-profile {
+  width: 50%;
+  display: flex;
+  align-items: center;  
+}
+
+.image-profile {
+  width: 50%;
+  border-radius: 50%;
+}
+
+.btn-edit-profile {
+  background: #E0E0EA;
+  border-radius: 23px;
+  color: #14123A;
+  display: inline-block;
+  font-size: 13px;
+  padding: 11px 25px;
+  font-weight: bold;
+  margin: 20px auto;
+  border: none;
+  text-decoration: none !important;
+}
+
+.btn-back {
+  background: #E0E0EA;
+  border-radius: 50%;
+  color: #14123A;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px 14px;
+  font-weight: bold;
+  border: none;
+  text-decoration: none !important;
+  margin-right: 20px;
 }

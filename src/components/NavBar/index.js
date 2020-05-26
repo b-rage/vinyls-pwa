@@ -9,20 +9,21 @@ import image from '../../assets/img/logo192.png';
 const NavBar = (props) => {
 
     const [showMenu, setShowMenu] = useState(null);
-    const avatarImgUrl = props.context.userInfo.avatarImgUrl;
+    const [avatarImgUrl, setAvatarImgUrl] = useState(null);
 
     useEffect(() => {
       const userId = sessionStorage.getItem('userId');
       setShowMenu(props.context.showMenu);
-      getUserInfo(userId);     
-    }, []);
+      getUserInfo(userId); 
+      console.log('props.context.userInfo', props.context.userInfo)
+      setAvatarImgUrl(props.context.userInfo.avatarImgUrl);   
+    }, [props.context.userInfo.avatarImgUrl]);
 
     const getUserInfo = (userId) => {
       try { 
         firebaseApp.database().ref("users")
           .child(userId).once('value', snapshot => {
               props.context.setUserInfo(snapshot.val());
-              console.log('userInfo', snapshot.val())  
             return snapshot.val();
           });           
       } catch (error) {
