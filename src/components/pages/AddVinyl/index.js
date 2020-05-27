@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { firebaseApp, userRef } from "../../../firebase";
-import { Link } from "react-router-dom";
-import CryptoAES from 'crypto-js/aes';
-import image from '../../../assets/img/logo192.png';
 
 
-const Register = (props) => {
+const AddVinyl = (props) => {
   const [username, updateUsername] = useState("");
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
@@ -13,9 +10,14 @@ const Register = (props) => {
   const [error, updateError] = useState(false);
 
   const handleUsernameChange = (e) => {
-      updateError(false);
-      const username = e.target.value;
-      updateUsername(username);
+      if (e.target.value && e.target.value == '') {
+        updateErrorMessage('username is required')
+        updateError(true);
+      }else{
+        updateError(false);
+        const username = e.target.value;
+        updateUsername(username);
+      }
   };
 
   const handleEmailChange = (e) => {
@@ -32,50 +34,28 @@ const Register = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let exist;
 
-    userRef.orderByChild("username").equalTo(username).on("value", function(snapshot) {
-      if (snapshot.exists()) {
-            console.log("exists");
-            exist = true;
-      }else{
-          console.log("doesn't exist");
-          exist = false;
+    firebaseApp
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        if (!username) {
+          return false;
         }
+
+
+        /* userRef.child(data.user.uid).set({
+          email: email,
+          username: username,
+        }); */
+
+        return true;
+      })
+      .catch((err) => {
+        updateErrorMessage(err.message);
+        updateError(true);
+        return err;
       });
-
-    if(username == '') {
-      updateErrorMessage('Username is required')
-      updateError(true);
-    }else if(exist == true){
-      updateErrorMessage('Username already exists')
-      updateError(true);
-    }else{
-      firebaseApp
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((data) => {
-
-          const cipherEmail = CryptoAES.encrypt(email, 'secret key 123');
-          const cipherPassword = CryptoAES.encrypt(password, 'secret key 123');
-
-          localStorage.setItem('email', cipherEmail);
-          localStorage.setItem('password', cipherPassword);
-
-          userRef.child(data.user.uid).set({
-            email: email,
-            username: username,
-            avatarImgUrl: ''
-          });
-
-          return true;
-        })
-        .catch((err) => {
-          updateErrorMessage(err.message);
-          updateError(true);
-          return err;
-        });
-    }   
   };
 
   return (
@@ -114,11 +94,6 @@ const Register = (props) => {
                 Sign Up
               </button>
             </div>
-            <div>
-              <Link to="/">
-                <p className="p">Log In</p>
-              </Link>
-            </div>
           </form>
         </div>
       </div>
@@ -126,4 +101,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default AddVinyl;

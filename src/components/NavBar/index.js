@@ -16,7 +16,9 @@ const NavBar = (props) => {
       setShowMenu(props.context.showMenu);
       getUserInfo(userId); 
       console.log('props.context.userInfo', props.context.userInfo)
-      setAvatarImgUrl(props.context.userInfo.avatarImgUrl);   
+      if(props.context.userInfo && props.context.userInfo.avatarImgUrl) {
+        setAvatarImgUrl(props.context.userInfo.avatarImgUrl);
+      }
     }, [props.context.userInfo.avatarImgUrl]);
 
     const getUserInfo = (userId) => {
@@ -32,6 +34,8 @@ const NavBar = (props) => {
     }
 
     const onLogout = () => {
+      setShowMenu(false);
+      props.context.setShowMenu(false);
       firebaseApp.auth().signOut()
         .then(() => {
             sessionStorage.removeItem('userId');

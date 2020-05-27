@@ -35,11 +35,14 @@ const Profile = (props) => {
 
   return (
     <div className="profile">
-      {!showImageUpload && <div className="row">
-        <div className="col-image-profile">
-          <img className="image-profile" src={imageUrl} alt="profile image" />
+      {!showImageUpload && <div className="row-profile">
+        <div>
+          <p className="p-title">{props.context.userInfo.username}</p>
         </div>
-        <div className="col-btn-profile">
+        <div className="col-image-profile">
+          <img className="image-profile" src={imageUrl ? imageUrl : './img/icon-profile.png'} alt="profile image" />
+        </div>
+        <div>
          <button className="btn-edit-profile" onClick={editImage}>Edit Image</button>
         </div>
       </div>}

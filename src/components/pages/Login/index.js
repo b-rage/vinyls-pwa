@@ -41,6 +41,11 @@ const Login = (props) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((data) => {
+        const cipherEmail = CryptoAES.encrypt(email, 'secret key 123');
+        const cipherPassword = CryptoAES.encrypt(password, 'secret key 123');
+
+        localStorage.setItem('email', cipherEmail);
+        localStorage.setItem('password', cipherPassword);
         userRef.child(data.user.uid).once("value", (snapshot) => {
           console.log("snapshot.val()", snapshot.val());
           return snapshot.val();
