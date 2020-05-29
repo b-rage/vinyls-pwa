@@ -43,7 +43,7 @@ const Profile = (props) => {
           <img className="image-profile" src={imageUrl ? imageUrl : './img/icon-profile.png'} alt="profile image" />
         </div>
         <div>
-         <button className="btn-edit-profile" onClick={editImage}>Edit Image</button>
+         <button className="btn-edit-profile" onTouchEnd={editImage}>Edit Image</button>
         </div>
       </div>}
       {showImageUpload && <div className="modal-image">

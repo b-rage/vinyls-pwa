@@ -106,8 +106,11 @@ const FileUpload = ({ doImageUrl, fileType, onShowImageUpload }) => {
 
     return (
         <>  
-            <button className="btn-back" onClick={goBack}>&#8826;</button> 
-            <input className="input-class-upload-image" type="file" onChange={onUpload} /> 
+            <button className="btn-back" onTouchEnd={goBack}>&#8826;</button> 
+            <label htmlFor="file-upload" className="custom-file-upload">
+                choose file
+            </label>
+            <input type="file" onChange={onUpload} id="file-upload" /> 
             <div className="crop-container">
                 <Cropper
                 image={image}
@@ -132,7 +135,7 @@ const FileUpload = ({ doImageUrl, fileType, onShowImageUpload }) => {
                 />   
                               
             </div>
-            <button className="btn-image-upload" onClick={showCroppedImage}>Done</button> 
+            <button className="btn-image-upload" onTouchEnd={showCroppedImage}>Done</button> 
         </>
     );
 }

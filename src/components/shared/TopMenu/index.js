@@ -31,11 +31,11 @@ const TopMenu = (props) => {
 
   return (
       <div className="row top-menu">
-          <div className={name == 'home' ? "top-menu-btn-active" : "top-menu-btn"} onClick={gotoHome}>
+          <div className={name == 'home' ? "top-menu-btn-active" : "top-menu-btn"} onTouchEnd={gotoHome}>
           
               <p className="top-menu-p" ><FontAwesomeIcon icon={faGlobe} className="top-menu-icon"/>HOME</p>
           </div>
-          <div className={name == 'contacts' ? "top-menu-btn-active" : "top-menu-btn"} onClick={gotoContacts}>
+          <div className={name == 'contacts' ? "top-menu-btn-active" : "top-menu-btn"} onTouchEnd={gotoContacts}>
               <p className="top-menu-p" ><FontAwesomeIcon icon={faUsers} className="top-menu-icon"/>CONTACTS</p>
           </div>
           <div className={name == 'search' ? "top-menu-btn-active" : "top-menu-btn"}>

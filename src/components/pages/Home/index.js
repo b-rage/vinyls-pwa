@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { WithStoreConsumer } from "../../store";
 
 
-
 const Home = (props) => {
 
   useEffect(() => {  
@@ -14,6 +13,7 @@ const Home = (props) => {
 
   return (
     <div className="home">
+
       <div className="row">
 
       </div>

@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Contacts from "./components/pages/Contacts";
 import TopMenu from "./components/shared/TopMenu";
 import Profile from "./components/pages/Profile";
+import AddVinyl from "./components/pages/AddVinyl";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -78,6 +79,14 @@ function App(props) {
             <Route exact path="/profile" render={() =>
                 isLoggedIn ? (
                   <Profile isLoggedIn={isLoggedIn}/>
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route exact path="/add-vinyl" render={() =>
+                isLoggedIn ? (
+                  <AddVinyl isLoggedIn={isLoggedIn}/>
                 ) : (
                   <Redirect to="/" />
                 )

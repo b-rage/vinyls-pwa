@@ -13,6 +13,7 @@
   background-color: #14123A;
 }
 
+
 a:hover, a:visited, a:link, a:active {
 
   text-decoration: none!important;
@@ -145,7 +146,7 @@ button:focus {
 
 .nav-div-right {
   width: 50%;
-  padding-right: 20px;
+  padding-right: 5px;
   display: flex;
   flex-flow: nowrap;
   justify-content: flex-end;
@@ -159,6 +160,7 @@ button:focus {
 
 .nav-div-menu {
   display: inline-block;
+  padding: 0 15px 0 16px;
 }
 
 .bar {
@@ -174,7 +176,7 @@ button:focus {
   position: fixed;
   right: 0;
   left: 0;
-  top: 55px;
+  top: 91px;
   z-index: 1030;
   width: 100%;
 }
@@ -234,6 +236,24 @@ input[type="password"].input-login::-webkit-input-placeholder {
 
 input[type="text"].input-login::-webkit-input-placeholder {
   color: #E0E0EA;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  cursor: pointer;
+  background: #E0E0EA;
+  border-radius: 23px;
+  color: #14123A;
+  display: inline-block;
+  font-size: 13px;
+  padding: 11px 50px;
+  font-weight: bold;
+  margin: 10px auto;
+  border: none;
+  text-decoration: none !important;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 
@@ -302,7 +322,7 @@ input[type="text"].input-login::-webkit-input-placeholder {
 
 .modal-image {
   z-index: 1001;
-  padding-top: 20px;
+  padding-top: 9px;
 }
 
 .col-image-profile {
@@ -320,6 +340,13 @@ input[type="text"].input-login::-webkit-input-placeholder {
   width: 40%;
   border-radius: 50%;
 }
+
+@media (min-width: 500px) { 
+  .image-profile {
+    width: 20%;
+    border-radius: 50%;
+  }
+ }
 
 .btn-edit-profile {
   background: #E0E0EA;
@@ -345,4 +372,25 @@ input[type="text"].input-login::-webkit-input-placeholder {
   border: none;
   text-decoration: none !important;
   margin-right: 20px;
+}
+
+/* ADD VINYL */
+
+.input-form {
+  width: 80%;
+  height: 20px;
+  font-size: 14px;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+  border: 2px solid #E0E0EA;
+  border-radius: 23px;
+  color: #14123A;
+}
+
+.add-vinyl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  margin-top: 108px;
 }

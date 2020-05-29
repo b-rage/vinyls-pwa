@@ -5,11 +5,14 @@ import { withRouter } from "react-router-dom";
 import { WithStoreConsumer } from "../store";
 import { firebaseApp } from '../../firebase';
 import image from '../../assets/img/logo192.png';
+import { useAddToHomescreenPrompt } from "../useAddToHomescreenPrompt";
 
 const NavBar = (props) => {
 
     const [showMenu, setShowMenu] = useState(null);
     const [avatarImgUrl, setAvatarImgUrl] = useState(null);
+
+    const [prompt, promptToInstall] = useAddToHomescreenPrompt();
 
     useEffect(() => {
       const userId = sessionStorage.getItem('userId');
@@ -58,7 +61,7 @@ const NavBar = (props) => {
   return (
     <>
       <div className="navbar">
-        <div className="nav-div" onClick={onShowMenu}>
+        <div className="nav-div" onTouchEnd={onShowMenu}>
           <img src={image} alt="logo-vinyls" className="logo-navbar"/>
         </div>
        <div className="nav-div-right">
@@ -66,16 +69,16 @@ const NavBar = (props) => {
          {/*  <p className="p">{props.context.userInfo.username}</p> */}
           <img className='img-profile-small' src={avatarImgUrl ? avatarImgUrl : './img/icon-profile.png'} ></img>
         </div>
-        <div className="nav-div-menu">
-          <FontAwesomeIcon icon={faEllipsisV} onClick={onShowMenu} className="ellipsis-menu-icon"/>
+        <div className="nav-div-menu" onTouchEnd={onShowMenu}>
+          <FontAwesomeIcon icon={faEllipsisV} className="ellipsis-menu-icon"/>
         </div>
         </div>
       </div>
       {showMenu && <div>
         <ul className="main-nav">
-          <li className="nav-links-li" onClick={onHome}>
+          <li className="nav-links-li" onTouchEnd={promptToInstall}>
             <a href="#" className="nav-links">
-              Home
+              Add to Home Screen
             </a>
           </li>
           <li  className="nav-links-li">
@@ -93,8 +96,8 @@ const NavBar = (props) => {
               Contact Us
             </a>
           </li>
-          <li  className="nav-links-li">
-            <a onClick={onLogout} className="nav-links">
+          <li  className="nav-links-li" onTouchEnd={onLogout}>
+            <a href="#" className="nav-links">
               Logout
             </a>
           </li>
