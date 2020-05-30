@@ -46,10 +46,10 @@ const Login = (props) => {
 
         localStorage.setItem('email', cipherEmail);
         localStorage.setItem('password', cipherPassword);
-        userRef.child(data.user.uid).once("value", (snapshot) => {
+        /* userRef.child(data.user.uid).once("value", (snapshot) => {
           console.log("snapshot.val()", snapshot.val());
           return snapshot.val();
-        });
+        }); */
       })
       .catch((err) => {
         updateErrorMessage(err.message);

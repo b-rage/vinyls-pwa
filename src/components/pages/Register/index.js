@@ -12,10 +12,16 @@ const Register = (props) => {
   const [errorMessage, updateErrorMessage] = useState("");
   const [error, updateError] = useState(false);
 
+  const capitalizeTxt = (txt) => {
+    return txt.toLowerCase().replace( /\b./g, function(a){ 
+      return a.toUpperCase();
+    })
+  }
+
   const handleUsernameChange = (e) => {
       updateError(false);
       const username = e.target.value;
-      updateUsername(username);
+      updateUsername(capitalizeTxt(username));
   };
 
   const handleEmailChange = (e) => {
@@ -34,48 +40,54 @@ const Register = (props) => {
     e.preventDefault();
     let exist;
 
-    userRef.orderByChild("username").equalTo(username).on("value", function(snapshot) {
-      if (snapshot.exists()) {
-            console.log("exists");
-            exist = true;
-      }else{
-          console.log("doesn't exist");
+    console.log('username', username)
+
+    firebaseApp.firestore().collection('users').where('username_upper', '==', username.toUpperCase()).get()
+      .then(snapshot => {
+        if (snapshot.empty == true) {
           exist = false;
-        }
-      });
-
-    if(username == '') {
-      updateErrorMessage('Username is required')
-      updateError(true);
-    }else if(exist == true){
-      updateErrorMessage('Username already exists')
-      updateError(true);
-    }else{
-      firebaseApp
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((data) => {
-
-          const cipherEmail = CryptoAES.encrypt(email, 'secret key 123');
-          const cipherPassword = CryptoAES.encrypt(password, 'secret key 123');
-
-          localStorage.setItem('email', cipherEmail);
-          localStorage.setItem('password', cipherPassword);
-
-          userRef.child(data.user.uid).set({
-            email: email,
-            username: username,
-            avatarImgUrl: ''
-          });
-
-          return true;
-        })
-        .catch((err) => {
-          updateErrorMessage(err.message);
+        } else {
+          exist = true;
+        } 
+        if(username == '') {
+          updateErrorMessage('Username is required')
           updateError(true);
-          return err;
-        });
-    }   
+        }else if(exist == true){
+          updateErrorMessage('Username already exists')
+          updateError(true);
+        }else{
+          firebaseApp
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((data) => {
+    
+              const cipherEmail = CryptoAES.encrypt(email, 'secret key 123');
+              const cipherPassword = CryptoAES.encrypt(password, 'secret key 123');
+    
+              localStorage.setItem('email', cipherEmail);
+              localStorage.setItem('password', cipherPassword);
+    
+              firebaseApp.firestore().collection('users').doc(data.user.uid).set({
+                email: email,
+                username: username,
+                username_upper: username.toUpperCase(),
+                avatarImgUrl: ''
+              });
+    
+              return true;
+            })
+            .catch((err) => {
+              updateErrorMessage(err.message);
+              updateError(true);
+              return err;
+            });
+        }
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      }); 
+
+       
   };
 
   return (

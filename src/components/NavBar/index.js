@@ -18,22 +18,25 @@ const NavBar = (props) => {
       const userId = sessionStorage.getItem('userId');
       setShowMenu(props.context.showMenu);
       getUserInfo(userId); 
-      console.log('props.context.userInfo', props.context.userInfo)
-      if(props.context.userInfo && props.context.userInfo.avatarImgUrl) {
-        setAvatarImgUrl(props.context.userInfo.avatarImgUrl);
-      }
-    }, [props.context.userInfo.avatarImgUrl]);
+    }, []);
 
     const getUserInfo = (userId) => {
-      try { 
-        firebaseApp.database().ref("users")
-          .child(userId).once('value', snapshot => {
-              props.context.setUserInfo(snapshot.val());
-            return snapshot.val();
-          });           
-      } catch (error) {
-          console.log('error', error);
-      } 
+
+      firebaseApp.firestore().collection('users').doc(userId).get()
+         .then(doc => {
+            if (doc.empty) {
+              console.log('No matching documents.');
+              return;
+            }
+            props.context.setUserInfo(doc.data());
+            console.log('props.context.userInfo', props.context.userInfo)
+            if(props.context.userInfo && props.context.userInfo.avatarImgUrl) {
+              setAvatarImgUrl(props.context.userInfo.avatarImgUrl);
+      }
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
     }
 
     const onLogout = () => {

@@ -15,8 +15,17 @@ import AddVinyl from "./components/pages/AddVinyl";
 
 function App(props) {
   const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isOffLine, setIsOffLine] = useState(null);
 
   useEffect(() => {
+    window.addEventListener('load', function(e) {
+      if (navigator.onLine) {
+        console.log('We\'re online!');
+      } else {
+        console.log('We\'re offline...');
+        setIsOffLine(true);
+      }
+    }, false)
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
         console.log("user.uid", user);
@@ -57,6 +66,9 @@ function App(props) {
           <>
             <NavBar />
             <TopMenu/>
+            <div className="div-no-connection">
+              {isOffLine && <p>NO INTERNET CONNECTION</p>}
+            </div>
             <Footer />
             </>
         ) : null}

@@ -28,9 +28,15 @@ const Profile = (props) => {
       setImageUrl(url);
       props.context.setUserInfo({...props.context.state, avatarImgUrl: url});
 
-      userRef.child(userId).update({
+      firebaseApp.firestore().collection('users').doc(userId).update({
         avatarImgUrl: url
-    });
+      })
+      .then((doc) => {
+        console.log('doc', doc)
+      })
+      .catch(err => {
+          console.log('err', err);
+      });
     }
 
   return (
