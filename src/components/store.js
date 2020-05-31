@@ -25,13 +25,6 @@ export class StoreProvider extends React.Component {
       const _messages = [...this.state.messages, value]
       this.setState({ messages: _messages })
     },
-    changed: false,
-    setChanged: value => {
-      this.setState({ changed: value })
-    }, 
-
-    isLoggedIn: false,
-    setIsLoggedIn: value => this.setState({ isLoggedIn: value }),
     */
     showMenu: false,
     setShowMenu: value => this.setState({ showMenu: value }),
@@ -39,20 +32,14 @@ export class StoreProvider extends React.Component {
     pageName: '',
     setPageName: value => this.setState({ pageName: value }),
 
-    userInfo: {},
+    userInfo: {
+      avatarImgUrl: "",
+      email: "",
+      username: "",
+      username_upper: ""
+    },
     setUserInfo: value => this.setState({ userInfo: value })
   }
-
-
-  /* componentDidMount() {
-    try {                  
-        logic.getCurrentUser()
-        .then(user => { this.setState({ username: user.username, user: user})})
-        .catch(err => this.setState({ error: err.message }))
-    } catch (err) {
-        this.setState({ error: err.message })
-    } 
-  } */ 
 
 
   render() {

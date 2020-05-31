@@ -28,11 +28,11 @@ const Footer = (props) => {
     <>
         <div className="footer">
             <div className="row">
-              <div className={name == 'profile' ? "bottom-menu-btn-active" : "bottom-menu-btn"} onTouchEnd={gotoProfile}>
+              <div className={name == 'profile' ? "bottom-menu-btn-active" : "bottom-menu-btn"} onTouchEnd={gotoProfile} onMouseUp={gotoProfile}>
                 <FontAwesomeIcon icon={faUser} className="bottom-menu-icon"/>
                 <p className="p-footer">Profile</p>
               </div>
-              <div className={name == 'add-vinyl' ? "bottom-menu-btn-active" : "bottom-menu-btn"} onTouchEnd={gotoAddVinyl}>
+              <div className={name == 'add-vinyl' ? "bottom-menu-btn-active" : "bottom-menu-btn"} onTouchEnd={gotoAddVinyl} onMouseUp={gotoAddVinyl}>
                 <FontAwesomeIcon icon={faCompactDisc} className="bottom-menu-icon"/>
                 <p className="p-footer">Add Vinyl</p>
               </div>

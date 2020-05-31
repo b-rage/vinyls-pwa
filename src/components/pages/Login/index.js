@@ -91,10 +91,10 @@ const Login = (props) => {
           </form>
         </div>
         <div>
-          <Link to="/recovery-psw" onTouchEnd={props.onCleanError}>
+          <Link to="/recovery-psw" onTouchEnd={props.onCleanError} onMouseUp={props.onCleanError}>
             <p className="p">Forgot Password?</p>
           </Link>
-          <Link to="/register" onTouchEnd={props.onCleanError}>
+          <Link to="/register" onTouchEnd={props.onCleanError} onMouseUp={props.onCleanError}>
             <p className="p">Sign Up</p>
           </Link>
         </div>

@@ -106,7 +106,7 @@ const FileUpload = ({ doImageUrl, fileType, onShowImageUpload }) => {
 
     return (
         <>  
-            <button className="btn-back" onTouchEnd={goBack}>&#8826;</button> 
+            <button className="btn-back" onTouchEnd={goBack} onMouseUp={goBack}>&#8826;</button> 
             <label htmlFor="file-upload" className="custom-file-upload">
                 choose file
             </label>
@@ -135,7 +135,7 @@ const FileUpload = ({ doImageUrl, fileType, onShowImageUpload }) => {
                 />   
                               
             </div>
-            <button className="btn-image-upload" onTouchEnd={showCroppedImage}>Done</button> 
+            <button className="btn-image-upload" onTouchEnd={showCroppedImage} onMouseUp={showCroppedImage}>Done</button> 
         </>
     );
 }

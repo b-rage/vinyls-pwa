@@ -1,11 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { WithStoreConsumer } from "../../store";
+import imageAndroidIos from '../../../assets/img/android-ios.png';
+
 
 
 const Home = (props) => {
 
-  useEffect(() => {  
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => { 
+    let dontShowAgain = props.context.userInfo && props.context.userInfo.dontShowAgain;
     props.context.setPageName('home');
+    if(dontShowAgain) {
+      setShowModal(true);
+    }
   },[]);
 
     
@@ -14,78 +22,38 @@ const Home = (props) => {
   return (
     <div className="home">
 
-      <div className="row">
+      {showModal && <div className="row">
 
-      </div>
-      home
+      </div>}
+      {!showModal && 
+      <div style={{position: 'relative', minHeight: '80vh'}}>
+        <div style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)', width: '100%'}}>
+          <div className="row">
+            <p className="p-title">Add to homescreen's device</p>
+          </div>
+          <div className="row">
+            <img src={imageAndroidIos}  style={{width: '100%', maxWidth: '500px'}} alt="add to homescreen image" />
+          </div>
+          <div className="row">
+            <div style={{width: '50%'}}>
+              <p className="p-title">Android Chrome</p>
+            </div>
+            <div style={{width: '50%'}}>
+              <p className="p-title">IOS Safari</p>
+            </div>
+          </div>
+          <br></br>
+          <div className="row">
+            <div style={{width: '50%', textAlign: 'center'}}>
+              <button className="btn-inverse" >Don't show again</button>
+            </div>
+            <div style={{width: '50%', textAlign: 'center'}}>
+              <button className="btn-inverse">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>}
       
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home<br></br>
-      <br></br>home home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home<br></br>
-      <br></br>home home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home<br></br>
-      <br></br>home home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home<br></br>
-      <br></br>home home<br></br>
-      <br></br>home home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home
-      <br></br>
-      home<br></br>
-      <br></br>home
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { WithStoreConsumer } from "../../store";
+import { withRouter } from "react-router-dom";
 import { firebaseApp } from "../../../firebase";
 import ImageUpload from '../../shared/ImageUpload';
 
@@ -8,7 +9,7 @@ const AddVinyl = (props) => {
 
   const [title, updateTitle] = useState("");
   const [author, updateAuthor] = useState("");
-  const [password, updatePassword] = useState("");
+  const [description, updateDescription] = useState("");
   const [errorMessage, updateErrorMessage] = useState("");
   const [error, updateError] = useState(false);
 
@@ -54,10 +55,10 @@ const AddVinyl = (props) => {
     }
   };
 
-  const handlePasswordChange = (e) => {
+  const handleDescriptionChange = (e) => {
     updateError(false);
-    const password = e.target.value;
-    updatePassword(password);
+    const description = e.target.value;
+    updateDescription(description);
   };
 
   const handleSubmit = (e) => {
@@ -75,10 +76,12 @@ const AddVinyl = (props) => {
         title: title,
         author: author,
         vinylImgUrl: imageUrl,
-        userId: userId
+        userId: userId,
+        description
       })
       .then((doc) => {
         console.log('doc', doc)
+        props.history.push('/index');
       })
       .catch(err => {
           console.log('err', err);
@@ -96,7 +99,7 @@ const AddVinyl = (props) => {
               <img style={{width: '100px', paddingBottom: '10px'}}  src={imageUrl ? imageUrl : './img/vinyl.png'} />
             </div>
             <div>
-              <button className="btn-add-vinyl" onTouchEnd={addImage}>Add Vinyl Image</button>
+              <button className="btn-add-vinyl" onTouchEnd={addImage} onMouseUp={addImage}>Add Vinyl Image</button>
             </div>
             <div>
               <input
@@ -121,10 +124,11 @@ const AddVinyl = (props) => {
             <div>
               <input
                 className="input-form"
-                placeholder="Password"
-                type="password"
-                onChange={handlePasswordChange}
+                placeholder="Description"
+                type="text"
+                onChange={handleDescriptionChange}
                 autoComplete="off"
+                style={{textTransform: 'capitalize'}}
               />
             </div>
             {error && <p className="p-error" style={{paddingTop: '0px'}}>{errorMessage}</p>}
@@ -143,4 +147,4 @@ const AddVinyl = (props) => {
   );
 };
 
-export default WithStoreConsumer(AddVinyl);
+export default withRouter(WithStoreConsumer(AddVinyl));

@@ -5,20 +5,20 @@ import { withRouter } from "react-router-dom";
 import { WithStoreConsumer } from "../store";
 import { firebaseApp } from '../../firebase';
 import image from '../../assets/img/logo192.png';
-import { useAddToHomescreenPrompt } from "../useAddToHomescreenPrompt";
+
 
 const NavBar = (props) => {
 
-    const [showMenu, setShowMenu] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
     const [avatarImgUrl, setAvatarImgUrl] = useState(null);
 
-    const [prompt, promptToInstall] = useAddToHomescreenPrompt();
+
 
     useEffect(() => {
       const userId = sessionStorage.getItem('userId');
       setShowMenu(props.context.showMenu);
       getUserInfo(userId); 
-    }, []);
+    }, [props.context.userInfo.avatarImgUrl]);
 
     const getUserInfo = (userId) => {
 
@@ -29,10 +29,10 @@ const NavBar = (props) => {
               return;
             }
             props.context.setUserInfo(doc.data());
-            console.log('props.context.userInfo', props.context.userInfo)
-            if(props.context.userInfo && props.context.userInfo.avatarImgUrl) {
-              setAvatarImgUrl(props.context.userInfo.avatarImgUrl);
-      }
+            if(doc.data() && doc.data().avatarImgUrl) {
+              setAvatarImgUrl(doc.data().avatarImgUrl);
+            }
+            console.log('object', props.context.userInfo)
           })
           .catch(err => {
             console.log('Error getting documents', err);
@@ -53,8 +53,8 @@ const NavBar = (props) => {
     }
 
     const onShowMenu = () => {
-        props.context.setShowMenu(!showMenu);
-        setShowMenu(!showMenu);
+      props.context.setShowMenu(!showMenu);
+      setShowMenu(!showMenu);
     }
 
     const onHome = () => {
@@ -64,7 +64,7 @@ const NavBar = (props) => {
   return (
     <>
       <div className="navbar">
-        <div className="nav-div" onTouchEnd={onShowMenu}>
+        <div className="nav-div" onMouseUp={onShowMenu}>
           <img src={image} alt="logo-vinyls" className="logo-navbar"/>
         </div>
        <div className="nav-div-right">
@@ -72,16 +72,16 @@ const NavBar = (props) => {
          {/*  <p className="p">{props.context.userInfo.username}</p> */}
           <img className='img-profile-small' src={avatarImgUrl ? avatarImgUrl : './img/icon-profile.png'} ></img>
         </div>
-        <div className="nav-div-menu" onTouchEnd={onShowMenu}>
+        <div className="nav-div-menu" onMouseUp={onShowMenu}>
           <FontAwesomeIcon icon={faEllipsisV} className="ellipsis-menu-icon"/>
         </div>
         </div>
       </div>
       {showMenu && <div>
         <ul className="main-nav">
-          <li className="nav-links-li" onTouchEnd={promptToInstall}>
+          <li className="nav-links-li" onTouchEnd={onHome} onMouseUp={onHome}>
             <a href="#" className="nav-links">
-              Add to Home Screen
+              Home
             </a>
           </li>
           <li  className="nav-links-li">
@@ -99,7 +99,7 @@ const NavBar = (props) => {
               Contact Us
             </a>
           </li>
-          <li  className="nav-links-li" onTouchEnd={onLogout}>
+          <li  className="nav-links-li" onTouchEnd={onLogout} onMouseUp={onLogout}>
             <a href="#" className="nav-links">
               Logout
             </a>
