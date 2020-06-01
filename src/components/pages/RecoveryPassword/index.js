@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { firebaseApp, userRef } from "../../../firebase";
+import React, { useState } from "react";
+import { firebaseApp } from "../../../firebase";
 import { withRouter, Link } from 'react-router-dom';
 import image from '../../../assets/img/logo192.png';
 
-const RecoveryPassword = (props) => {
+const RecoveryPassword = () => {
 
   const [email, updateEmail] = useState("");
   const [errorMessage, updateErrorMessage] = useState("");

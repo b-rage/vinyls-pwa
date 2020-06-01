@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { firebaseApp, userRef } from "../../../firebase";
+import { firebaseApp } from "../../../firebase";
 import { Link } from "react-router-dom";
 import CryptoENC from 'crypto-js/enc-utf8';
 import CryptoAES from 'crypto-js/aes';

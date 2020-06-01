@@ -10,7 +10,7 @@ import image from '../../assets/img/logo192.png';
 const NavBar = (props) => {
 
     const [showMenu, setShowMenu] = useState(false);
-    const [avatarImgUrl, setAvatarImgUrl] = useState(null);
+    const [avatarImgUrl, setAvatarImgUrl] = useState('');
 
 
 
@@ -29,8 +29,10 @@ const NavBar = (props) => {
               return;
             }
             props.context.setUserInfo(doc.data());
-            if(doc.data() && doc.data().avatarImgUrl) {
+            if(doc.data() && doc.data().avatarImgUrl.length > 0) {
               setAvatarImgUrl(doc.data().avatarImgUrl);
+            }else{
+              setAvatarImgUrl('');
             }
             console.log('object', props.context.userInfo)
           })
@@ -39,13 +41,14 @@ const NavBar = (props) => {
           });
     }
 
+
     const onLogout = () => {
       setShowMenu(false);
       props.context.setShowMenu(false);
       firebaseApp.auth().signOut()
         .then(() => {
-            sessionStorage.removeItem('userId');
             props.history.push('/');
+            sessionStorage.removeItem('userId');
         })
         .catch(err => {
             console.log('err', err);

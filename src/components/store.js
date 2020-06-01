@@ -36,7 +36,8 @@ export class StoreProvider extends React.Component {
       avatarImgUrl: "",
       email: "",
       username: "",
-      username_upper: ""
+      username_upper: "",
+      dontShowAgain: false
     },
     setUserInfo: value => this.setState({ userInfo: value })
   }

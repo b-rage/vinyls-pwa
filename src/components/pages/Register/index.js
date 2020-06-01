@@ -41,18 +41,24 @@ const Register = (props) => {
     let exist;
 
     console.log('username', username)
+    if(username == '') {
+      updateErrorMessage('Username is required')
+      updateError(true);
+      return;
+    }
 
-    firebaseApp.firestore().collection('users').where('username_upper', '==', username.toUpperCase()).get()
-      .then(snapshot => {
-        if (snapshot.empty == true) {
-          exist = false;
-        } else {
-          exist = true;
-        } 
-        if(username == '') {
-          updateErrorMessage('Username is required')
-          updateError(true);
-        }else if(exist == true){
+    fetch(
+      `https://us-central1-vinyls-5ec89.cloudfunctions.net/app/api/users/${username}`,
+      {
+        method: "GET",
+      }
+    )
+    .then((res) => {
+        return res.json();
+      })
+      .then(data => {
+        exist = data.exist;
+        if(exist == true){
           updateErrorMessage('Username already exists')
           updateError(true);
         }else{
@@ -66,27 +72,31 @@ const Register = (props) => {
     
               localStorage.setItem('email', cipherEmail);
               localStorage.setItem('password', cipherPassword);
-    
-              firebaseApp.firestore().collection('users').doc(data.user.uid).set({
-                email: email,
-                username: username,
-                username_upper: username.toUpperCase(),
-                avatarImgUrl: ''
-              });
-    
+
+              fetch('https://us-central1-vinyls-5ec89.cloudfunctions.net/app/api/users/', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  userId: data.user.uid,
+                  email: email,
+                  username: username,
+                  username_upper: username.toUpperCase(),
+                }),
+              })   
               return true;
             })
             .catch((err) => {
               updateErrorMessage(err.message);
               updateError(true);
               return err;
-            });
+            })
         }
       })
-      .catch(err => {
-        console.log('Error: ', err);
-      }); 
-
+      .catch(function (error) {
+        updateErrorMessage(error.message);
+        updateError(true);
+        console.log("Error getting documents2: ", error);
+      });
        
   };
 
